@@ -1,0 +1,13 @@
+nav a{
+  padding: 15px 20px;
+  margin: 4px;
+  color: hsl(0, 0%, 33%);
+  display: inline-block;
+  border-radius: 5px;
+  background-color: rgb(216, 211, 211);
+}
+
+nav a:hover {
+  color: white;
+  background-color: #39454b;
+}
