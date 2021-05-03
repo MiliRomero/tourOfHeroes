@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import {Hero} from '../hero';
+import { Component, OnInit } from "@angular/core";
+import { Hero } from "../hero";
+import { HeroService } from "../hero.service";
+import { MessageService } from "../message.service";
 
 @Component({
-  selector: 'app-heroes',
-  templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.css']
+  selector: "app-heroes",
+  templateUrl: "./heroes.component.html",
+  styleUrls: ["./heroes.component.css"]
 })
 export class HeroesComponent implements OnInit {
+  selectedHero?: Hero;
 
-  hero: Hero = {
-    id: 1,
-    name: 'Windstorm'
-  };
+  heroes: Hero[] = [];
 
-  constructor() { }
+  constructor(
+    private heroService: HeroService,
+    private messageService: MessageService
+  ) {} //lo pasa como parametro y a la vez lo declara
 
   ngOnInit() {
+    this.getHeroes();
   }
 
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes().subscribe(heroes => (this.heroes = heroes));
+  } //el this trae el valor de la variable que le estas pasando, en este caso, "this.heroes" trea el valor de la propiedad heroes
+  //Observable.subscribe()hace que getHeroes se quede esperando hasta que le llegue el observable para recien ahi emitir el array de heroes
 }
